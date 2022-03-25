@@ -8,6 +8,7 @@ import javax.persistence.*;
 
 @Entity
 @Getter @Setter @NoArgsConstructor
+@Table(name = "registered_user")
 public class RegisteredUser {
     @Id
     @SequenceGenerator(name = "userSeqGen", sequenceName = "userSeqGen", initialValue = 1, allocationSize = 1)
