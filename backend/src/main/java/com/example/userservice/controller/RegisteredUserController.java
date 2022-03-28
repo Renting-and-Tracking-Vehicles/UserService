@@ -5,6 +5,7 @@ import com.example.userservice.model.RegisteredUser;
 import com.example.userservice.service.interfaces.RegisteredUserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -24,7 +25,8 @@ public class RegisteredUserController implements UserServiceApi {
     }
 
     @Override
-    public RegisteredUser getUser(Integer id) {
-        return userService.getUser(id);
+    public com.example.userservice.api.RegisteredUser getUser(Integer id) {
+        RegisteredUser user = userService.getUser(id);
+        return new com.example.userservice.api.RegisteredUser(user.getEmail(), user.getName(), user.getSurname());
     }
 }
