@@ -7,10 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(value = "/users", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -25,6 +22,7 @@ public class RegisteredUserController implements UserServiceApi {
     }
 
     @Override
+    @GetMapping("/{id}")
     public com.example.userservice.api.RegisteredUser getUser(Integer id) {
         RegisteredUser user = userService.getUser(id);
         return new com.example.userservice.api.RegisteredUser(user.getEmail(), user.getName(), user.getSurname());
