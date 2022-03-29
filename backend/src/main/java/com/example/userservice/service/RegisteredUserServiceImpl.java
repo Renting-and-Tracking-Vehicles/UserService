@@ -18,6 +18,6 @@ public class RegisteredUserServiceImpl implements RegisteredUserService {
 
     @Override
     public RegisteredUser getUser(Integer id) {
-        return userRepository.getById(id);
+        return userRepository.findById(id).get();
     }
 }
