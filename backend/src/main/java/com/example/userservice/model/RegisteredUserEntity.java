@@ -1,13 +1,17 @@
 package com.example.userservice.model;
 
-import lombok.Getter;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import javax.persistence.*;
 
 @Entity
-@Getter @Setter @NoArgsConstructor
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Table(name = "registered_user")
 public class RegisteredUserEntity {
     @Id
@@ -25,12 +29,4 @@ public class RegisteredUserEntity {
     private String surname;
     @Column(name="phone", nullable=false)
     private String phone;
-
-    public RegisteredUserEntity(String email, String password, String name, String surname, String phone) {
-        this.email = email;
-        this.password = password;
-        this.name = name;
-        this.surname = surname;
-        this.phone = phone;
-    }
 }
