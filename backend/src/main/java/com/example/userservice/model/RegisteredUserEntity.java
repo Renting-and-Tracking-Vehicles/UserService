@@ -9,7 +9,7 @@ import javax.persistence.*;
 @Entity
 @Getter @Setter @NoArgsConstructor
 @Table(name = "registered_user")
-public class RegisteredUser {
+public class RegisteredUserEntity {
     @Id
     @SequenceGenerator(name = "userSeqGen", sequenceName = "userSeqGen", initialValue = 1, allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "userSeqGen")
@@ -26,7 +26,7 @@ public class RegisteredUser {
     @Column(name="phone", nullable=false)
     private String phone;
 
-    public RegisteredUser(String email, String password, String name, String surname, String phone) {
+    public RegisteredUserEntity(String email, String password, String name, String surname, String phone) {
         this.email = email;
         this.password = password;
         this.name = name;

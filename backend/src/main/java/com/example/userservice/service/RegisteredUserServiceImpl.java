@@ -1,23 +1,28 @@
 package com.example.userservice.service;
 
-import com.example.userservice.model.RegisteredUser;
-import com.example.userservice.repository.IRegisteredUserRepository;
+import com.example.userservice.api.RegisteredUser;
+import com.example.userservice.model.RegisteredUserEntity;
+import com.example.userservice.repository.RegisteredUserRepository;
 import com.example.userservice.service.interfaces.RegisteredUserService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 @Service
+@AllArgsConstructor
 public class RegisteredUserServiceImpl implements RegisteredUserService {
-    @Autowired
-    private IRegisteredUserRepository userRepository;
+
+    private final RegisteredUserRepository userRepository;
+    private final ModelMapper modelMapper;
 
     @Override
-    public RegisteredUser addUser(RegisteredUser registeredUser) {
+    public RegisteredUserEntity addUser(RegisteredUserEntity registeredUser) {
         return  userRepository.save(registeredUser);
     }
 
     @Override
     public RegisteredUser getUser(Integer id) {
-        return userRepository.findById(id).get();
+        RegisteredUserEntity user = userRepository.findById(id).get();
+        return modelMapper.map(user, RegisteredUser.class);
     }
 }

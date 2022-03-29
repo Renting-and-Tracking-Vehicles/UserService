@@ -8,6 +8,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 public interface UserServiceApi {
 
     @GetMapping("/users/{id}")
-    public com.example.userservice.api.RegisteredUser getUser(@PathVariable Integer id);
+    public RegisteredUser getUser(@PathVariable Integer id);
 
 }
