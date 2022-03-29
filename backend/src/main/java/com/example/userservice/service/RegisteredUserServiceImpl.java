@@ -1,6 +1,7 @@
 package com.example.userservice.service;
 
 import com.example.userservice.api.RegisteredUser;
+import com.example.userservice.exception.UserNotFoundException;
 import com.example.userservice.model.RegisteredUserEntity;
 import com.example.userservice.repository.RegisteredUserRepository;
 import com.example.userservice.service.interfaces.RegisteredUserService;
@@ -16,13 +17,18 @@ public class RegisteredUserServiceImpl implements RegisteredUserService {
     private final ModelMapper modelMapper;
 
     @Override
-    public RegisteredUserEntity addUser(RegisteredUserEntity registeredUser) {
-        return  userRepository.save(registeredUser);
+    public RegisteredUser addUser(RegisteredUser registeredUser) {
+        RegisteredUserEntity registeredUserEntity = modelMapper.map(registeredUser, RegisteredUserEntity.class);
+        userRepository.save(registeredUserEntity);
+        return registeredUser;
     }
 
     @Override
-    public RegisteredUser getUser(Integer id) {
-        RegisteredUserEntity user = userRepository.findById(id).get();
-        return modelMapper.map(user, RegisteredUser.class);
+    public RegisteredUser getUser(Integer id) throws UserNotFoundException {
+        RegisteredUserEntity userEntity = userRepository.findById(id).isPresent() ? userRepository.findById(id).get() : null;
+        if(userEntity.equals(null))
+            throw new UserNotFoundException();
+
+        return modelMapper.map(userEntity, RegisteredUser.class);
     }
 }
