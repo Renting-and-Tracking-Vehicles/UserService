@@ -60,8 +60,8 @@ public class RegisteredUserServiceTest {
 
     @Test
     public void testGetUserException() {
-        Assert.assertThrows(NullPointerException.class, () -> {
-            when(registeredUserRepositoryMock.findById(DB_FALSE_ID)).thenReturn(null);
+        Assert.assertThrows(UserNotFoundException.class, () -> {
+            when(registeredUserRepositoryMock.findById(DB_FALSE_ID)).thenReturn(Optional.empty());
             registeredUserService.getUser(DB_FALSE_ID);
         });
     }
