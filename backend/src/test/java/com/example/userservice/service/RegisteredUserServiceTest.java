@@ -18,6 +18,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.junit.Assert;
 import static org.assertj.core.api.Assertions.assertThat;
 
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -25,7 +26,6 @@ import java.util.Optional;
 import static com.example.userservice.constants.RegisteredUserConstants.*;
 import static org.mockito.Mockito.when;
 
-//@RunWith(SpringRunner.class)
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
 public class RegisteredUserServiceTest {
@@ -41,7 +41,6 @@ public class RegisteredUserServiceTest {
     @Test
     public void testAddUser() {
         RegisteredUser registeredUser = RegisteredUser.builder().email(EMAIL).name(NAME).surname(SURNAME).build();
-        RegisteredUserEntity registeredUserEntity = RegisteredUserEntity.builder().email(EMAIL).name(NAME).password(PASSWORD).surname(SURNAME).phone(PHONE).build();
 
         when(registeredUserRepositoryMock.save(registeredUserEntityMock)).thenReturn(registeredUserEntityMock);
 
@@ -57,6 +56,14 @@ public class RegisteredUserServiceTest {
         RegisteredUser registeredUserEntity = registeredUserService.getUser(DB_ID);
 
         Assert.assertEquals(registeredUserEntity.getEmail(), registeredUserEntityMock.getEmail());
+    }
+
+    @Test
+    public void testGetUserException() {
+        Assert.assertThrows(NullPointerException.class, () -> {
+            when(registeredUserRepositoryMock.findById(DB_FALSE_ID)).thenReturn(null);
+            registeredUserService.getUser(DB_FALSE_ID);
+        });
     }
 
     @Test

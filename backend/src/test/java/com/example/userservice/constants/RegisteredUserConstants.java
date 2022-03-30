@@ -8,4 +8,5 @@ public class RegisteredUserConstants {
     public static final String PHONE = "123456";
 
     public static final int DB_ID = 0;
+    public static final int DB_FALSE_ID = 1;
 }
