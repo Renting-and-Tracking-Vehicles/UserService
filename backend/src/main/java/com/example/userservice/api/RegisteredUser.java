@@ -11,4 +11,6 @@ public class RegisteredUser {
     private String email;
     private String name;
     private String surname;
+    private String password;
+    private String phone;
 }
