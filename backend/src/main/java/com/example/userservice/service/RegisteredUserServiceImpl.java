@@ -33,14 +33,14 @@ public class RegisteredUserServiceImpl implements RegisteredUserService {
     public RegisteredUser getUser(Integer id) throws UserNotFoundException {
         Optional<RegisteredUserEntity> registeredUser = userRepository.findById(id);
         if(registeredUser.isPresent())
-            return modelMapper.map(registeredUser.get(), RegisteredUser.class)
+            return modelMapper.map(registeredUser.get(), RegisteredUser.class);
 
         throw new UserNotFoundException();
     }
 
     @Override
     public List<RegisteredUser> findAll() {
-        return userRepository.findAll().stream().map(i, RegisteredUser.class)).collect(Collectors.toList());
+        return userRepository.findAll().stream().map(i -> modelMapper.map(i, RegisteredUser.class)).collect(Collectors.toList());
 
     }
 }
