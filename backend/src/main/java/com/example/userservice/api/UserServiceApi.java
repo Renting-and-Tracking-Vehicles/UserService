@@ -9,6 +9,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 public interface UserServiceApi {
 
     @GetMapping("/users/{id}")
-    public RegisteredUser getUser(@PathVariable Integer id) throws UserNotFoundException;
+    public RegisteredUser getUser(@PathVariable Integer id);
 
 }

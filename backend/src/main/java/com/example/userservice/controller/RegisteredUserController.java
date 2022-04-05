@@ -24,7 +24,7 @@ public class RegisteredUserController implements UserServiceApi {
 
     @Override
     @GetMapping("/{id}")
-    public RegisteredUser getUser(@PathVariable Integer id) throws UserNotFoundException {
+    public RegisteredUser getUser(@PathVariable Integer id) {
         return userService.getUser(id);
     }
 
