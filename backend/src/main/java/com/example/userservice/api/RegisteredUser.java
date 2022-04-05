@@ -14,4 +14,6 @@ public class RegisteredUser {
     private String surname;
     private String password;
     private String phone;
+    private String role;
+
 }
