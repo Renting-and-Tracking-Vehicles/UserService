@@ -29,7 +29,7 @@ import static org.mockito.Mockito.when;
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
 public class RegisteredUserServiceTest {
-   /* @Mock
+    @Mock
     private RegisteredUserRepository registeredUserRepositoryMock;
 
     @Mock
@@ -74,5 +74,5 @@ public class RegisteredUserServiceTest {
 
         assertThat(registeredUsers).hasSize(1);
         Assert.assertEquals(registeredUsers.get(0).getEmail(), EMAIL);
-    }*/
+    }
 }
