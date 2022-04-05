@@ -1,8 +1,8 @@
 package com.example.userservice.auth;
 
-import com.example.userservice.dto.TokenSubject;
 import com.example.userservice.model.RegisteredUserEntity;
 import io.jsonwebtoken.Jwts;
+import org.bouncycastle.jcajce.BCFKSLoadStoreParameter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
@@ -29,11 +29,10 @@ public class TokenUtils {
 
     private SignatureAlgorithm SIGNATURE_ALGORITHM = SignatureAlgorithm.HS512;
 
-    public String generateToken(TokenSubject tokenSubject){
-        System.out.println(String.valueOf(tokenSubject));
+    public String generateToken(String email){
         return Jwts.builder()
                 .setIssuer(APP_NAME)
-                .setSubject(String.valueOf(tokenSubject))
+                .setSubject(email)
                 .setAudience(generateAudience())
                 .setIssuedAt(new Date())
                 .setExpiration(generateExpirationDate())
@@ -54,17 +53,17 @@ public class TokenUtils {
         return null;
     }
 
-    public String getSubjectFromToken(String token){
-        String subject;
+    public String getEmailFromToken(String token){
+        String email;
         try {
             final Claims claims = this.getAllClaimsFromToken(token);
-            subject = claims.getSubject();
+            email = claims.getSubject();
         } catch (ExpiredJwtException ex){
             throw ex;
         } catch (Exception e){
-            subject = null;
+            email = null;
         }
-        return subject.substring(12, subject.indexOf(','));
+        return email;
     }
 
     public Date getIssuedAtDateFromToken(String token){
@@ -110,7 +109,7 @@ public class TokenUtils {
 
     public Boolean validateToken(String token, UserDetails userDetails){
         RegisteredUserEntity registeredUser = (RegisteredUserEntity) userDetails;
-        final String email = getSubjectFromToken(token);
+        final String email = getEmailFromToken(token);
         final Date created = getIssuedAtDateFromToken(token);
 
         return (email != null &&

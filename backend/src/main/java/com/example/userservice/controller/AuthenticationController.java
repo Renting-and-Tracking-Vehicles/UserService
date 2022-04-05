@@ -3,7 +3,6 @@ package com.example.userservice.controller;
 import com.example.userservice.auth.TokenUtils;
 import com.example.userservice.dto.Jwt;
 import com.example.userservice.dto.JwtAuthenticationRequest;
-import com.example.userservice.dto.TokenSubject;
 import com.example.userservice.model.RegisteredUserEntity;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,9 +36,10 @@ public class AuthenticationController {
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         RegisteredUserEntity registeredUser = (RegisteredUserEntity) authentication.getPrincipal();
-        String jwt = tokenUtils.generateToken(new TokenSubject(registeredUser.getEmail(), registeredUser.getPassword(), registeredUser.getRoles().get(0).getName()));
+        String jwt = tokenUtils.generateToken(registeredUser.getEmail());
         int expiresIn = tokenUtils.getExpiredIn();
 
         return ResponseEntity.ok(new Jwt(jwt, expiresIn));
+
     }
 }
