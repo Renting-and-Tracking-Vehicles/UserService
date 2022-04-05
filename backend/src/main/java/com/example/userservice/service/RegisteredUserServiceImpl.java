@@ -28,6 +28,7 @@ public class RegisteredUserServiceImpl implements RegisteredUserService, UserDet
     private final PasswordEncoder passwordEncoder;
     private final ModelMapper modelMapper = new ModelMapper();
 
+
     @Override
     public RegisteredUser addUser(RegisteredUser registeredUser) {
         RegisteredUserEntity registeredUserEntity = modelMapper.map(registeredUser, RegisteredUserEntity.class);
@@ -35,6 +36,7 @@ public class RegisteredUserServiceImpl implements RegisteredUserService, UserDet
         registeredUserEntity.setPassword(passwordEncoder.encode(registeredUser.getPassword()));
         userRepository.save(registeredUserEntity);
         return registeredUser;
+
     }
 
     @Override
@@ -49,6 +51,7 @@ public class RegisteredUserServiceImpl implements RegisteredUserService, UserDet
     @Override
     public List<RegisteredUser> findAll() {
         return userRepository.findAll().stream().map(i -> modelMapper.map(i, RegisteredUser.class)).collect(Collectors.toList());
+
     }
 
     @Override

@@ -27,4 +27,12 @@ public class RegisteredUserController implements UserServiceApi {
     public RegisteredUser getUser(@PathVariable Integer id) {
         return userService.getUser(id);
     }
+
+    @PutMapping("/editUser/{userId}")
+    public RegisteredUser editUser(@PathVariable("userId") Integer id, @RequestBody RegisteredUser newUser) throws UserNotFoundException{
+        RegisteredUser editedUser = userService.getUser(id);
+        newUser.setId(id);
+        return userService.addUser(newUser);
+    }
+
 }
