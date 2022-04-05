@@ -24,13 +24,16 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+        String subject;
         String email;
         String authToken = tokenUtils.getToken(request);
 
         try {
             if(authToken != null){
-                email = tokenUtils.getEmailFromToken(authToken);
-                if(email != null){
+                subject = tokenUtils.getSubjectFromToken(authToken);
+                email = getEmail(subject);
+                System.out.println(email);
+                if(subject != null){
                     UserDetails userDetails = userService.loadUserByUsername(email);
                     if(tokenUtils.validateToken(authToken, userDetails)){
                         TokenBasedAuthentication authentication = new TokenBasedAuthentication(userDetails);
@@ -43,5 +46,11 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
             throw ex;
         }
         filterChain.doFilter(request, response);
+    }
+
+    private String getEmail(String tokenSubject){
+        String[] pomArr = tokenSubject.split(" ");
+        String[] emailPom = pomArr[0].split("=");
+        return emailPom[1].substring(0, emailPom[1].length());
     }
 }
