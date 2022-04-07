@@ -12,4 +12,6 @@ public interface RegisteredUserService {
     RegisteredUser getUser(Integer id) throws UserNotFoundException;
 
     List<RegisteredUser> findAll();
+
+    RegisteredUser getByEmail(String email);
 }

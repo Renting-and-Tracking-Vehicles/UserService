@@ -55,6 +55,19 @@ public class RegisteredUserServiceImpl implements RegisteredUserService, UserDet
     }
 
     @Override
+    public RegisteredUser getByEmail(String email) {
+        Optional<RegisteredUserEntity> registeredUser = userRepository.findByEmail(email);
+        RegisteredUser user;
+        if(registeredUser.isPresent()) {
+            user = modelMapper.map(registeredUser.get(), RegisteredUser.class);
+            user.setRole(registeredUser.get().getRoles().get(0).getName());
+            return user;
+        }
+
+        throw new UserNotFoundException();
+    }
+
+    @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         Optional<RegisteredUserEntity> registeredUserEntity = userRepository.findByEmail(email);
         if(registeredUserEntity.isPresent()){
