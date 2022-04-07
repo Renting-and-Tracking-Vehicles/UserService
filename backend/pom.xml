@@ -15,6 +15,7 @@
     <description>backend</description>
     <properties>
         <java.version>11</java.version>
+        <notification-service-api.version>0.0.1-SNAPSHOT</notification-service-api.version>
     </properties>
     <dependencies>
         <dependency>
@@ -70,6 +71,13 @@
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-openfeign</artifactId>
             <version>3.1.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.example</groupId>
+            <artifactId>notification-service</artifactId>
+            <version>${notification-service-api.version}</version>
+            <classifier>api</classifier>
         </dependency>
 
         <dependency>
