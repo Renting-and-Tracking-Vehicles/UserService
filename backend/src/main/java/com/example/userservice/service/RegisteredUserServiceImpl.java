@@ -1,5 +1,6 @@
 package com.example.userservice.service;
 
+import com.example.notificationservice.api.SNSApi;
 import com.example.userservice.api.RegisteredUser;
 import com.example.userservice.exception.UserNotFoundException;
 import com.example.userservice.model.RegisteredUserEntity;
@@ -24,6 +25,7 @@ import java.util.stream.Collectors;
 public class RegisteredUserServiceImpl implements RegisteredUserService, UserDetailsService {
 
     private final RegisteredUserRepository userRepository;
+    private final SNSApi snsApi;
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
     private final ModelMapper modelMapper = new ModelMapper();
@@ -35,6 +37,9 @@ public class RegisteredUserServiceImpl implements RegisteredUserService, UserDet
         registeredUserEntity.setRoles(roleRepository.findByName(registeredUser.getRole()));
         registeredUserEntity.setPassword(passwordEncoder.encode(registeredUser.getPassword()));
         userRepository.save(registeredUserEntity);
+        snsApi.addSubscription(registeredUser.getEmail());
+        //snsApi.subscribe(registeredUser.getPhone());
+        snsApi.publishMessageToTopic();
         return registeredUser;
 
     }
