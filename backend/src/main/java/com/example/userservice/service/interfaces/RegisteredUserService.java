@@ -14,4 +14,6 @@ public interface RegisteredUserService {
     List<RegisteredUser> findAll();
 
     RegisteredUser getByEmail(String email);
+
+    RegisteredUser editUser(RegisteredUser registeredUser);
 }

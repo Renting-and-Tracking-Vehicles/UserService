@@ -37,9 +37,9 @@ public class RegisteredUserServiceImpl implements RegisteredUserService, UserDet
         registeredUserEntity.setRoles(roleRepository.findByName(registeredUser.getRole()));
         registeredUserEntity.setPassword(passwordEncoder.encode(registeredUser.getPassword()));
         userRepository.save(registeredUserEntity);
-        snsApi.addSubscription(registeredUser.getEmail());
+        //snsApi.addSubscription(registeredUser.getEmail());
         //snsApi.subscribe(registeredUser.getPhone());
-        snsApi.publishMessageToTopic();
+        //snsApi.publishMessageToTopic();
         return registeredUser;
 
     }
@@ -70,6 +70,14 @@ public class RegisteredUserServiceImpl implements RegisteredUserService, UserDet
         }
 
         throw new UserNotFoundException();
+    }
+
+    @Override
+    public RegisteredUser editUser(RegisteredUser registeredUser) {
+        RegisteredUserEntity registeredUserEntity = modelMapper.map(registeredUser, RegisteredUserEntity.class);
+        registeredUserEntity.setRoles(roleRepository.findByName(registeredUser.getRole()));
+        userRepository.save(registeredUserEntity);
+        return registeredUser;
     }
 
     @Override
